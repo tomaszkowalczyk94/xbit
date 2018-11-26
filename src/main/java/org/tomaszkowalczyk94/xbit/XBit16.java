@@ -1,5 +1,8 @@
 package org.tomaszkowalczyk94.xbit;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 public class XBit16 extends XBit {
     public static final short MIN_SIGNED_VALUE = -32768;
     public static final short MAX_SIGNED_VALUE = 32767;
@@ -17,6 +20,8 @@ public class XBit16 extends XBit {
     protected XBit16(short valueContainer) {
         this.valueContainer = valueContainer;
     }
+
+
 
     public static XBit16 valueOfUnsigned(int value) {
         if(value <MIN_UNSIGNED_VALUE || value > MAX_UNSIGNED_VALUE) {
@@ -38,12 +43,20 @@ public class XBit16 extends XBit {
         return new XBit16((short)value);
     }
 
+    public static XBit16 valueOfHighAndLow(XBit8 high, XBit8 low) {
+        ByteBuffer bb = ByteBuffer.allocate(2);
+        bb.order(ByteOrder.BIG_ENDIAN);
+        bb.put(high.getSignedValue());
+        bb.put(low.getSignedValue());
+       return new XBit16(bb.getShort(0));
+    }
+
     public short getSignedValue() {
         return (short)valueContainer;
     }
 
     public int getUnsignedValue() {
-        return (valueContainer & 0xFF);
+        return (valueContainer & 0xFFFF);
     }
 
     public XBit8 getHighByte() {

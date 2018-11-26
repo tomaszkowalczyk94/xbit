@@ -12,6 +12,8 @@ public class XBit16Test extends TestCase {
         assertEquals(-32768, XBit16.valueOfUnsigned(32768).getValueContainer());
         assertEquals(-25536, XBit16.valueOfUnsigned(40000).getValueContainer());
 
+        assertEquals(256, XBit16.valueOfUnsigned(256).getUnsignedValue());
+
         testNumberFormatException(()-> XBit16.valueOfUnsigned(-1));
         testNumberFormatException(()-> XBit16.valueOfUnsigned(65536));
     }
@@ -65,19 +67,9 @@ public class XBit16Test extends TestCase {
 
     public void testGetUnsignedValue() {
         assertEquals(200, XBit16.valueOfUnsigned(200).getUnsignedValue());
-        assertEquals(200, XBit16.valueOfSigned(-56).getUnsignedValue());
+        assertEquals(65480, XBit16.valueOfSigned(-56).getUnsignedValue());
 
     }
-
-    /**
-     * {257, 1, 1},
-     {256, 1, 0},
-     {255, 0, 255},
-     {254, 0, 254},
-     {0xFFFF, 255, 255},
-
-     */
-
 
     public void testGetHighByte() {
         assertEquals(1, XBit16.valueOfUnsigned(257).getHighByte().getUnsignedValue());
@@ -91,8 +83,30 @@ public class XBit16Test extends TestCase {
         assertEquals(0, XBit16.valueOfUnsigned(256).getLowByte().getUnsignedValue());
         assertEquals(255, XBit16.valueOfUnsigned(255).getLowByte().getUnsignedValue());
         assertEquals(255, XBit16.valueOfUnsigned(0xFFFF).getLowByte().getUnsignedValue());
-
     }
+
+    public void testValueOfHighAndLow() {
+        assertEquals(256,
+                XBit16.valueOfHighAndLow(
+                        XBit8.valueOfUnsigned(1),
+                        XBit8.valueOfUnsigned(0)
+                ).getUnsignedValue()
+        );
+
+        assertEquals(255,
+                XBit16.valueOfHighAndLow(
+                        XBit8.valueOfUnsigned(0),
+                        XBit8.valueOfUnsigned(255)
+                ).getUnsignedValue()
+        );
+        assertEquals(0xFFFF,
+                XBit16.valueOfHighAndLow(
+                        XBit8.valueOfUnsigned(255),
+                        XBit8.valueOfUnsigned(255)
+                ).getUnsignedValue()
+        );
+    }
+
 
     private void testNumberFormatException(Runnable function) {
         try{
