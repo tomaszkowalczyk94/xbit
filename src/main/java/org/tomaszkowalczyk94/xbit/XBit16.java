@@ -1,9 +1,11 @@
 package org.tomaszkowalczyk94.xbit;
 
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class XBit16 extends XBit {
+public class XBit16 extends XBit implements Serializable {
+
     public static final short MIN_SIGNED_VALUE = -32768;
     public static final short MAX_SIGNED_VALUE = 32767;
 

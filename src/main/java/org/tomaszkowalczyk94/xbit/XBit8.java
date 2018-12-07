@@ -1,6 +1,8 @@
 package org.tomaszkowalczyk94.xbit;
 
-public class XBit8 extends XBit {
+import java.io.Serializable;
+
+public class XBit8 extends XBit implements Serializable {
     public static final byte MIN_SIGNED_VALUE = -128;
     public static final byte MAX_SIGNED_VALUE = 127;
 
