@@ -2,7 +2,7 @@ package org.tomaszkowalczyk94.xbit;
 
 import junit.framework.TestCase;
 
-public class XBit16Test extends TestCase {
+public class XBitUtils16Test extends TestCase {
 
     public void testValueOfUnsigned() {
         assertEquals(0, XBit16.valueOfUnsigned(0).getValueContainer());

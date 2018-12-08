@@ -3,7 +3,7 @@ package org.tomaszkowalczyk94.xbit;
 import junit.framework.TestCase;
 
 
-public class XBit8Test extends TestCase {
+public class XBitUtils8Test extends TestCase {
 
 
 
