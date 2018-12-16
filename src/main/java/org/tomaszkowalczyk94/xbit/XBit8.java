@@ -57,6 +57,17 @@ public class XBit8 extends XBit implements Serializable {
         return (short)(valueContainer & 0xFF);
     }
 
+    public XBit8 setBit(int index, boolean value) {
+        int mask = 1 << index;
 
+        int newValue;
 
+        if(value) {
+            newValue = this.getUnsignedValue() | mask;
+        } else {
+            newValue = (this.getUnsignedValue() & ~mask);
+        }
+
+        return XBit8.valueOfUnsigned(newValue);
+    }
 }
