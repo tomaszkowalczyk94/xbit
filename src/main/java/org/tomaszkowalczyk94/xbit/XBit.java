@@ -40,4 +40,8 @@ public abstract class XBit {
     public int getValueContainer() {
         return valueContainer;
     }
+
+    public boolean isNegative() {
+        return(getBit(getSize()-1));
+    }
 }

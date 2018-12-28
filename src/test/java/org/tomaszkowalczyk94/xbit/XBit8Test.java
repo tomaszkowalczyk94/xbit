@@ -30,4 +30,12 @@ public class XBit8Test extends TestCase {
                 XBit8.valueOfUnsigned(0b10000000).setBit(5, true).getUnsignedValue()
         );
     }
+
+    public void testIsNegative() {
+        assertEquals(true, XBit8.valueOfSigned(-10).isNegative());
+        assertEquals(false, XBit8.valueOfSigned(10).isNegative());
+        assertEquals(false, XBit8.valueOfSigned(0).isNegative());
+        assertEquals(true, XBit8.valueOfSigned(-128).isNegative());
+        assertEquals(false, XBit8.valueOfSigned(127).isNegative());
+    }
 }
