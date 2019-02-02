@@ -39,6 +39,11 @@ public class XBit16 extends XBit implements Serializable {
         return MAX_UNSIGNED_VALUE;
     }
 
+    @Override
+    protected XBit createNewOfUnsigned(int value) {
+        return valueOfUnsigned(value);
+    }
+
     protected XBit16(short valueContainer) {
         this.valueContainer = valueContainer;
     }
@@ -132,19 +137,5 @@ public class XBit16 extends XBit implements Serializable {
                 getBit(1),
                 getBit(0),
         });
-    }
-
-    public XBit16 setBit(int index, boolean value) {
-        int mask = 1 << index;
-
-        int newValue;
-
-        if(value) {
-            newValue = this.getUnsignedValue() | mask;
-        } else {
-            newValue = (this.getUnsignedValue() & ~mask);
-        }
-
-        return XBit16.valueOfUnsigned(newValue);
     }
 }

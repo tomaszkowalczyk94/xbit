@@ -1,13 +1,15 @@
 package org.tomaszkowalczyk94.xbit;
 
 
-public abstract class XBit {
+public abstract class XBit<TSelf extends XBit> {
 
     public abstract short getSize();
     public abstract int getMinSignedValue();
     public abstract int getMaxSignedValue();
     public abstract int getMinUnsignedValue();
     public abstract int getMaxUnsignedValue();
+
+    protected abstract TSelf createNewOfUnsigned(int value);
 
     protected int valueContainer;
 
@@ -62,5 +64,19 @@ public abstract class XBit {
      */
     protected int getMask() {
         return getMaxUnsignedValue();
+    }
+
+    public TSelf setBit(int index, boolean value) {
+        int mask = 1 << index;
+
+        int newValue;
+
+        if(value) {
+            newValue = this.getUnsignedValue() | mask;
+        } else {
+            newValue = (this.getUnsignedValue() & ~mask);
+        }
+
+        return this.createNewOfUnsigned(newValue);
     }
 }

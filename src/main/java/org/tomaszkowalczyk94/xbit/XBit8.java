@@ -2,7 +2,7 @@ package org.tomaszkowalczyk94.xbit;
 
 import java.io.Serializable;
 
-public class XBit8 extends XBit implements Serializable {
+public class XBit8 extends XBit<XBit8> implements Serializable {
 
     public static final int SIZE = 8;
 
@@ -37,7 +37,12 @@ public class XBit8 extends XBit implements Serializable {
         return MAX_UNSIGNED_VALUE;
     }
 
-    protected XBit8(byte valueContainer) {
+    @Override
+    protected XBit8 createNewOfUnsigned(int value) {
+        return valueOfUnsigned(value);
+    }
+
+    protected XBit8(int valueContainer) {
         this.valueContainer = valueContainer;
     }
 
@@ -68,27 +73,5 @@ public class XBit8 extends XBit implements Serializable {
         byte b = 0;
         for(int i=0;i<8;i++) if(values[i]) b |= (128 >> i);
         return new XBit8(b);
-    }
-
-//    public byte getSignedValue() {
-//        return (byte)valueContainer;
-//    }
-//
-//    public short getUnsignedValue() {
-//        return (short)(valueContainer & 0xFF);
-//    }
-
-    public XBit8 setBit(int index, boolean value) {
-        int mask = 1 << index;
-
-        int newValue;
-
-        if(value) {
-            newValue = this.getUnsignedValue() | mask;
-        } else {
-            newValue = (this.getUnsignedValue() & ~mask);
-        }
-
-        return XBit8.valueOfUnsigned(newValue);
     }
 }
