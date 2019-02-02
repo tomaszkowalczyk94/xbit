@@ -4,6 +4,10 @@ package org.tomaszkowalczyk94.xbit;
 public abstract class XBit {
 
     public abstract short getSize();
+    public abstract int getMinSignedValue();
+    public abstract int getMaxSignedValue();
+    public abstract int getMinUnsignedValue();
+    public abstract int getMaxUnsignedValue();
 
     protected int valueContainer;
 
@@ -43,5 +47,20 @@ public abstract class XBit {
 
     public boolean isNegative() {
         return(getBit(getSize()-1));
+    }
+
+    public int getSignedValue() {
+        return valueContainer;
+    }
+
+    public int getUnsignedValue() {
+        return (valueContainer & getMaxUnsignedValue());
+    }
+
+    /**
+     * @return bitmask. For example, if number is 8bit, mask will be 0xFF.
+     */
+    protected int getMask() {
+        return getMaxUnsignedValue();
     }
 }

@@ -3,17 +3,38 @@ package org.tomaszkowalczyk94.xbit;
 import java.io.Serializable;
 
 public class XBit8 extends XBit implements Serializable {
+
+    public static final int SIZE = 8;
+
     public static final byte MIN_SIGNED_VALUE = -128;
     public static final byte MAX_SIGNED_VALUE = 127;
 
     public static final int MIN_UNSIGNED_VALUE = 0;
     public static final int MAX_UNSIGNED_VALUE = 255;
 
-    public static final int SIZE = 8;
-
     @Override
     public short getSize() {
         return SIZE;
+    }
+
+    @Override
+    public int getMinSignedValue() {
+        return MIN_SIGNED_VALUE;
+    }
+
+    @Override
+    public int getMaxSignedValue() {
+        return MAX_SIGNED_VALUE;
+    }
+
+    @Override
+    public int getMinUnsignedValue() {
+        return MIN_UNSIGNED_VALUE;
+    }
+
+    @Override
+    public int getMaxUnsignedValue() {
+        return MAX_UNSIGNED_VALUE;
     }
 
     protected XBit8(byte valueContainer) {
@@ -49,13 +70,13 @@ public class XBit8 extends XBit implements Serializable {
         return new XBit8(b);
     }
 
-    public byte getSignedValue() {
-        return (byte)valueContainer;
-    }
-
-    public short getUnsignedValue() {
-        return (short)(valueContainer & 0xFF);
-    }
+//    public byte getSignedValue() {
+//        return (byte)valueContainer;
+//    }
+//
+//    public short getUnsignedValue() {
+//        return (short)(valueContainer & 0xFF);
+//    }
 
     public XBit8 setBit(int index, boolean value) {
         int mask = 1 << index;

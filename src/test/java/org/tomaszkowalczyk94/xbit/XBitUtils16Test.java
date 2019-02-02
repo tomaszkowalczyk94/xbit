@@ -72,17 +72,17 @@ public class XBitUtils16Test extends TestCase {
     }
 
     public void testGetHighByte() {
-        assertEquals(1, XBit16.valueOfUnsigned(257).getHighByte().getUnsignedValue());
-        assertEquals(1, XBit16.valueOfUnsigned(256).getHighByte().getUnsignedValue());
-        assertEquals(0, XBit16.valueOfUnsigned(255).getHighByte().getUnsignedValue());
-        assertEquals(255, XBit16.valueOfUnsigned(0xFFFF).getHighByte().getUnsignedValue());
+        assertEquals(1, XBit16.valueOfUnsigned(257).getFirstByte().getUnsignedValue());
+        assertEquals(1, XBit16.valueOfUnsigned(256).getFirstByte().getUnsignedValue());
+        assertEquals(0, XBit16.valueOfUnsigned(255).getFirstByte().getUnsignedValue());
+        assertEquals(255, XBit16.valueOfUnsigned(0xFFFF).getFirstByte().getUnsignedValue());
     }
 
     public void testGetLowByte() {
-        assertEquals(1, XBit16.valueOfUnsigned(257).getLowByte().getUnsignedValue());
-        assertEquals(0, XBit16.valueOfUnsigned(256).getLowByte().getUnsignedValue());
-        assertEquals(255, XBit16.valueOfUnsigned(255).getLowByte().getUnsignedValue());
-        assertEquals(255, XBit16.valueOfUnsigned(0xFFFF).getLowByte().getUnsignedValue());
+        assertEquals(1, XBit16.valueOfUnsigned(257).getSecondByte().getUnsignedValue());
+        assertEquals(0, XBit16.valueOfUnsigned(256).getSecondByte().getUnsignedValue());
+        assertEquals(255, XBit16.valueOfUnsigned(255).getSecondByte().getUnsignedValue());
+        assertEquals(255, XBit16.valueOfUnsigned(0xFFFF).getSecondByte().getUnsignedValue());
     }
 
     public void testValueOfHighAndLow() {

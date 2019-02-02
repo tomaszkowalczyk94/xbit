@@ -19,11 +19,29 @@ public class XBit16 extends XBit implements Serializable {
         return SIZE;
     }
 
+    @Override
+    public int getMinSignedValue() {
+        return MIN_SIGNED_VALUE;
+    }
+
+    @Override
+    public int getMaxSignedValue() {
+        return MAX_SIGNED_VALUE;
+    }
+
+    @Override
+    public int getMinUnsignedValue() {
+        return MIN_UNSIGNED_VALUE;
+    }
+
+    @Override
+    public int getMaxUnsignedValue() {
+        return MAX_UNSIGNED_VALUE;
+    }
+
     protected XBit16(short valueContainer) {
         this.valueContainer = valueContainer;
     }
-
-
 
     public static XBit16 valueOfUnsigned(int value) {
         if(value <MIN_UNSIGNED_VALUE || value > MAX_UNSIGNED_VALUE) {
@@ -31,10 +49,6 @@ public class XBit16 extends XBit implements Serializable {
         }
 
         return new XBit16((short)value);
-    }
-
-    public static XBit16 valueOfSigned(short value) {
-        return new XBit16(value);
     }
 
     public static XBit16 valueOfSigned(int value) {
@@ -45,23 +59,56 @@ public class XBit16 extends XBit implements Serializable {
         return new XBit16((short)value);
     }
 
+    /**
+     * in big endian. alias for valueOfHighAndLowInBigEndian
+     */
     public static XBit16 valueOfHighAndLow(XBit8 high, XBit8 low) {
         ByteBuffer bb = ByteBuffer.allocate(2);
         bb.order(ByteOrder.BIG_ENDIAN);
-        bb.put(high.getSignedValue());
-        bb.put(low.getSignedValue());
-       return new XBit16(bb.getShort(0));
+        bb.put((byte)high.getSignedValue());
+        bb.put((byte)low.getSignedValue());
+        return new XBit16(bb.getShort(0));
     }
 
-    public short getSignedValue() {
-        return (short)valueContainer;
+    public static XBit16 valueOfHighAndLowInBigEndian(XBit8 high, XBit8 low) {
+        return valueOfHighAndLow(high, low);
+    }
+
+    public static XBit16 valueOfHighAndLowInLittleEndian(XBit8 high, XBit8 low) {
+        //@todo not implemented yet
+        return null;
+    }
+
+
+
+    public int getSignedValue() {
+        return getSignedInBigEndian();
     }
 
     public int getUnsignedValue() {
         return (valueContainer & 0xFFFF);
     }
 
-    public XBit8 getHighByte() {
+    public int getSignedInBigEndian() {
+        return valueContainer;
+    }
+
+    public int getSignedInLittleEndian() {
+        //@todo not implemented yet
+        return 0;
+    }
+
+    public int getUnsignedValueInLittleEndian() {
+        //@todo not implemented yet
+        return 0;
+    }
+
+    public int getSignedValueInLittleEndian() {
+        //@todo not implemented yet
+        return 0;
+    }
+
+    public XBit8 getFirstByte() {
         return XBit8.valueOfBooleanArray(new boolean[]{
                 getBit(15),
                 getBit(14),
@@ -74,7 +121,7 @@ public class XBit16 extends XBit implements Serializable {
         });
     }
 
-    public XBit8 getLowByte() {
+    public XBit8 getSecondByte() {
         return XBit8.valueOfBooleanArray(new boolean[]{
                 getBit(7),
                 getBit(6),
@@ -85,5 +132,19 @@ public class XBit16 extends XBit implements Serializable {
                 getBit(1),
                 getBit(0),
         });
+    }
+
+    public XBit16 setBit(int index, boolean value) {
+        int mask = 1 << index;
+
+        int newValue;
+
+        if(value) {
+            newValue = this.getUnsignedValue() | mask;
+        } else {
+            newValue = (this.getUnsignedValue() & ~mask);
+        }
+
+        return XBit16.valueOfUnsigned(newValue);
     }
 }
