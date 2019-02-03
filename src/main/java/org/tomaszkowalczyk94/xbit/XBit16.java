@@ -68,6 +68,10 @@ public class XBit16 extends XBit implements Serializable {
      * in big endian. alias for valueOfHighAndLowInBigEndian
      */
     public static XBit16 valueOfHighAndLow(XBit8 high, XBit8 low) {
+        return valueOfHighAndLowInBigEndian(high, low);
+    }
+
+    public static XBit16 valueOfHighAndLowInBigEndian(XBit8 high, XBit8 low) {
         ByteBuffer bb = ByteBuffer.allocate(2);
         bb.order(ByteOrder.BIG_ENDIAN);
         bb.put((byte)high.getSignedValue());
@@ -75,23 +79,8 @@ public class XBit16 extends XBit implements Serializable {
         return new XBit16(bb.getShort(0));
     }
 
-    public static XBit16 valueOfHighAndLowInBigEndian(XBit8 high, XBit8 low) {
-        return valueOfHighAndLow(high, low);
-    }
-
     public static XBit16 valueOfHighAndLowInLittleEndian(XBit8 high, XBit8 low) {
-        //@todo not implemented yet
-        return null;
-    }
-
-
-
-    public int getSignedValue() {
-        return getSignedInBigEndian();
-    }
-
-    public int getUnsignedValue() {
-        return (valueContainer & 0xFFFF);
+        return valueOfHighAndLowInBigEndian(low, high);
     }
 
     public int getSignedInBigEndian() {

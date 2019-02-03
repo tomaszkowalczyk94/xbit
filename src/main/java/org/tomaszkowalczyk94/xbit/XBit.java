@@ -3,7 +3,11 @@ package org.tomaszkowalczyk94.xbit;
 
 public abstract class XBit<TSelf extends XBit> {
 
+    /**
+     * @return count of bits
+     */
     public abstract short getSize();
+
     public abstract int getMinSignedValue();
     public abstract int getMaxSignedValue();
     public abstract int getMinUnsignedValue();
@@ -59,13 +63,6 @@ public abstract class XBit<TSelf extends XBit> {
         return (valueContainer & getMaxUnsignedValue());
     }
 
-    /**
-     * @return bitmask. For example, if number is 8bit, mask will be 0xFF.
-     */
-    protected int getMask() {
-        return getMaxUnsignedValue();
-    }
-
     public TSelf setBit(int index, boolean value) {
         int mask = 1 << index;
 
@@ -77,6 +74,14 @@ public abstract class XBit<TSelf extends XBit> {
             newValue = (this.getUnsignedValue() & ~mask);
         }
 
-        return this.createNewOfUnsigned(newValue);
+        return createNewOfUnsigned(newValue);
     }
+
+    /**
+     * @return bitmask. For example, if number is 8bit, mask will be 0xFF.
+     */
+    protected int getMask() {
+        return getMaxUnsignedValue();
+    }
+
 }
