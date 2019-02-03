@@ -1,7 +1,5 @@
 package org.tomaszkowalczyk94.xbit;
 
-import lombok.Builder;
-
 public class XBitUtils {
 
     private XBitUtils() {
@@ -52,8 +50,12 @@ public class XBitUtils {
     }
 
     public static XBit16 negativeOf(XBit16 value) {
-        //@todo not implemented yet
-        return null;
+        int buf = (~value.getUnsignedValue()) & XBit16.MAX_UNSIGNED_VALUE;
+
+        return XBitUtils.incrementBy(
+                XBit16.valueOfUnsigned(buf),
+                1
+        );
     }
 
     public static Arithmetic8bitResult addTwo8bits(XBit8 value1, XBit8 value2) {
@@ -88,33 +90,39 @@ public class XBitUtils {
     }
 
     public static XBit8 not8bit(XBit8 value) {
-        //@todo not implemented yet
-        return null;
+        return XBit8.valueOfUnsigned(
+                (~value.getUnsignedValue()) & XBit8.MAX_UNSIGNED_VALUE
+        );
     }
 
     public static XBit16 not16bit(XBit8 value) {
-        //@todo not implemented yet
-        return null;
+        return XBit16.valueOfUnsigned(
+                (~value.getUnsignedValue()) & XBit16.MAX_UNSIGNED_VALUE
+        );
     }
 
     public static XBit8 and8bit(XBit8 value1, XBit8 value2) {
-        //@todo not implemented yet
-        return null;
+        return XBit8.valueOfUnsigned(
+            (value1.getUnsignedValue() & value2.getUnsignedValue()) & XBit8.MAX_UNSIGNED_VALUE
+        );
     }
 
     public static XBit16 and16bit(XBit16 value1, XBit16 value2) {
-        //@todo not implemented yet
-        return null;
+        return XBit16.valueOfUnsigned(
+                (value1.getUnsignedValue() & value2.getUnsignedValue()) & XBit16.MAX_UNSIGNED_VALUE
+        );
     }
 
     public static XBit8 or8bit(XBit8 value1, XBit8 value2) {
-        //@todo not implemented yet
-        return null;
+        return XBit8.valueOfUnsigned(
+                (value1.getUnsignedValue() | value2.getUnsignedValue()) & XBit8.MAX_UNSIGNED_VALUE
+        );
     }
 
     public static XBit16 or16bit(XBit16 value1, XBit16 value2) {
-        //@todo not implemented yet
-        return null;
+        return XBit16.valueOfUnsigned(
+                (value1.getUnsignedValue() | value2.getUnsignedValue()) & XBit16.MAX_UNSIGNED_VALUE
+        );
     }
 
     public static XBit8 xor8bit(XBit8 value1, XBit8 value2) {

@@ -5,7 +5,7 @@
     <groupId>org.tomaszkowalczyk94.xbit</groupId>
     <artifactId>xbit</artifactId>
     <url>https://github.com/tomaszkowalczyk94/xbit</url>
-    <version>1.1.5</version>
+    <version>1.2.0</version>
 
     <build>
         <plugins>

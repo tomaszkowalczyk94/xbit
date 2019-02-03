@@ -5,10 +5,34 @@ import org.junit.Assert;
 
 public class XBitUtilsTest extends TestCase {
 
+    public void testIncrementFor8bit() {
+        assertEquals(1, XBitUtils.increment(
+                XBit8.valueOfUnsigned(0)
+        ).getUnsignedValue());
+        assertEquals(0, XBitUtils.increment(
+                XBit8.valueOfUnsigned(0xFF)
+        ).getUnsignedValue());
+    }
+
+    public void testIncrementFor16bit() {
+        assertEquals(1, XBitUtils.increment(
+                XBit16.valueOfUnsigned(0)
+        ).getUnsignedValue());
+        assertEquals(0, XBitUtils.increment(
+                XBit16.valueOfUnsigned(0xFFFF)
+        ).getUnsignedValue());
+    }
+
     public void testIncrementByFor8bit() {
         XBit8 value = XBit8.valueOfUnsigned(100);
         XBit8 incrementedValue = XBitUtils.incrementBy(value, 1);
         assertEquals(101, incrementedValue.getUnsignedValue());
+    }
+
+    public void testIncrementByFor16bit() {
+        XBit16 value = XBit16.valueOfUnsigned(1000);
+        XBit16 incrementedValue = XBitUtils.incrementBy(value, 1);
+        assertEquals(1001, incrementedValue.getUnsignedValue());
     }
 
     public void testIncrementByWithOverloadFor8bit() {
@@ -23,12 +47,6 @@ public class XBitUtilsTest extends TestCase {
         assertEquals(255, incrementedValue.getUnsignedValue());
     }
 
-    public void testIncrementByFor16bit() {
-        XBit16 value = XBit16.valueOfUnsigned(1000);
-        XBit16 incrementedValue = XBitUtils.incrementBy(value, 1);
-        assertEquals(1001, incrementedValue.getUnsignedValue());
-    }
-
     public void testIncrementByWithOverloadFor16bit() {
         XBit16 value = XBit16.valueOfUnsigned(65535);
         XBit16 incrementedValue = XBitUtils.incrementBy(value, 1);
@@ -41,7 +59,7 @@ public class XBitUtilsTest extends TestCase {
         assertEquals(65535, incrementedValue.getUnsignedValue());
     }
 
-    public void testNegativeOf() {
+    public void testNegativeOf8bit() {
         assertEquals(-10,XBitUtils.negativeOf(
                 XBit8.valueOfSigned(10)
         ).getSignedValue());
@@ -56,6 +74,24 @@ public class XBitUtilsTest extends TestCase {
 
         assertEquals(-128,XBitUtils.negativeOf(
                 XBit8.valueOfSigned(-128)
+        ).getSignedValue());
+    }
+
+    public void testNegativeOf16bit() {
+        assertEquals(-10,XBitUtils.negativeOf(
+                XBit16.valueOfSigned(10)
+        ).getSignedValue());
+
+        assertEquals(-127,XBitUtils.negativeOf(
+                XBit16.valueOfSigned(127)
+        ).getSignedValue());
+
+        assertEquals(127,XBitUtils.negativeOf(
+                XBit16.valueOfSigned(-127)
+        ).getSignedValue());
+
+        assertEquals(-32768,XBitUtils.negativeOf(
+                XBit16.valueOfSigned(-32768)
         ).getSignedValue());
     }
 
@@ -115,6 +151,25 @@ public class XBitUtilsTest extends TestCase {
         Assert.assertEquals(40, arithmetic8bitResult.result.getSignedValue());
         Assert.assertEquals(true, arithmetic8bitResult.carry);
         Assert.assertEquals(false, arithmetic8bitResult.overflow);
+    }
+
+    public void testNot8bit() {
+        assertEquals(0b11111111,
+                XBitUtils.not8bit(XBit8.valueOfUnsigned(0b00000000)).getUnsignedValue()
+        );
+
+        assertEquals(0b01111111,
+                XBitUtils.not8bit(XBit8.valueOfUnsigned(0b10000000)).getUnsignedValue()
+        );
+    }
+
+    public void testAnd8bit() {
+        assertEquals(0b10000000,
+                XBitUtils.and8bit(
+                        XBit8.valueOfUnsigned(0b11000000),
+                        XBit8.valueOfUnsigned(0b10100000)
+                ).getUnsignedValue()
+        );
     }
 
 }
