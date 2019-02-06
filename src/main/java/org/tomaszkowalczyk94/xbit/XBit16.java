@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class XBit16 extends XBit implements Serializable {
+public class XBit16 extends XBit<XBit16> implements Serializable {
 
     public static final short MIN_SIGNED_VALUE = -32768;
     public static final short MAX_SIGNED_VALUE = 32767;
@@ -40,7 +40,7 @@ public class XBit16 extends XBit implements Serializable {
     }
 
     @Override
-    protected XBit createNewOfUnsigned(int value) {
+    protected XBit16 createNewOfUnsigned(int value) {
         return valueOfUnsigned(value);
     }
 
