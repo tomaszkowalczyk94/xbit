@@ -8,14 +8,14 @@ public class XBitUtils {
 
     public static class Arithmetic8bitResult {
         public XBit8 result;
-        boolean carry = false;
-        boolean overflow = false;
+        public boolean carry = false;
+        public boolean overflow = false;
     }
 
     public static class Arithmetic16bitResult {
         public XBit16 result;
-        boolean carry = false;
-        boolean overflow = false;
+        public boolean carry = false;
+        public boolean overflow = false;
     }
 
     public static XBit8 increment(XBit8 value) {
