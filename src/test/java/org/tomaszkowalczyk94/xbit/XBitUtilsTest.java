@@ -96,61 +96,51 @@ public class XBitUtilsTest extends TestCase {
     }
 
     public void testAddTwo8bits() {
-        XBitUtils.Arithmetic8bitResult arithmetic8bitResult;
+        testAddTwoUnsigned8bit(0x7F, 0, 0x7F, false, false);
+        testAddTwoUnsigned8bit(0xFF, 0x7F, 0x7E, true, false);
+        testAddTwoUnsigned8bit(0, 0, 0, false, false);
+        testAddTwoUnsigned8bit(0xFF, 1, 0, true, false);
+        testAddTwoUnsigned8bit(0xFF, 0, 0xFF, false, false);
+        testAddTwoUnsigned8bit(0xFF, 0xFF, 0xFE, true, false);
+        testAddTwoUnsigned8bit(0xFF, 0x80, 0x7F, true, true);
+        testAddTwoUnsigned8bit(0x80, 0x80, 0, true, true);
+        testAddTwoUnsigned8bit(0x7F, 0x7F, 0xFE, false, true);
 
-        // ================
-        arithmetic8bitResult = XBitUtils.addTwo8bits(
-                XBit8.valueOfUnsigned(255),
-                XBit8.valueOfUnsigned(255)
-        );
-        Assert.assertEquals(254, arithmetic8bitResult.result.getUnsignedValue());
-        Assert.assertEquals(true, arithmetic8bitResult.carry);
-        Assert.assertEquals(false, arithmetic8bitResult.overflow);
-        // ================
-        arithmetic8bitResult = XBitUtils.addTwo8bits(
-                XBit8.valueOfSigned(127),
-                XBit8.valueOfSigned(127)
-        );
-        Assert.assertEquals(-2, arithmetic8bitResult.result.getSignedValue());
-        Assert.assertEquals(false, arithmetic8bitResult.carry);
-        Assert.assertEquals(true, arithmetic8bitResult.overflow);
-        // ================
-        arithmetic8bitResult = XBitUtils.addTwo8bits(
-                XBit8.valueOfUnsigned(0),
-                XBit8.valueOfUnsigned(255)
-        );
-        Assert.assertEquals(255, arithmetic8bitResult.result.getUnsignedValue());
-        Assert.assertEquals(false, arithmetic8bitResult.carry);
-        Assert.assertEquals(false, arithmetic8bitResult.overflow);
-        // ================
-        arithmetic8bitResult = XBitUtils.addTwo8bits(
-                XBit8.valueOfSigned(-20),
-                XBit8.valueOfSigned(-10)
-        );
-        Assert.assertEquals(-30, arithmetic8bitResult.result.getSignedValue());
-        Assert.assertEquals(true, arithmetic8bitResult.carry);
-        Assert.assertEquals(false, arithmetic8bitResult.overflow);
-        // ================
-        arithmetic8bitResult = XBitUtils.addTwo8bits(
-                XBit8.valueOfSigned(-128),
-                XBit8.valueOfSigned(-128)
-        );
-        Assert.assertEquals(0, arithmetic8bitResult.result.getSignedValue());
-        Assert.assertEquals(true, arithmetic8bitResult.carry);
-        Assert.assertEquals(true, arithmetic8bitResult.overflow);
+
     }
 
-    public void testSubTwo8bits() {
-        XBitUtils.Arithmetic8bitResult arithmetic8bitResult;
-
-        // ================
-        arithmetic8bitResult = XBitUtils.subTwo8bits(
-                XBit8.valueOfSigned(50),
-                XBit8.valueOfSigned(10)
+    private void testAddTwoUnsigned8bit(int firstArgument, int secondArgument, int expectedResult, boolean expectedCarryFlag,  boolean expectedOverflowlag) {
+        XBitUtils.Arithmetic8bitResult arithmetic8bitResult = XBitUtils.addTwo8bits(
+                XBit8.valueOfUnsigned(firstArgument),
+                XBit8.valueOfUnsigned(secondArgument)
         );
-        Assert.assertEquals(40, arithmetic8bitResult.result.getSignedValue());
-        Assert.assertEquals(true, arithmetic8bitResult.carry);
-        Assert.assertEquals(false, arithmetic8bitResult.overflow);
+        Assert.assertEquals(expectedResult, arithmetic8bitResult.result.getUnsignedValue());
+        Assert.assertEquals(expectedCarryFlag, arithmetic8bitResult.carry);
+        Assert.assertEquals(expectedOverflowlag, arithmetic8bitResult.overflow);
+    }
+
+
+    public void testSubTwo8bits() {
+        testSubTwoUnsigned8bit(255, 255, 0, false, false);
+        testSubTwoUnsigned8bit(0, 0, 0, false, false);
+
+        testSubTwoUnsigned8bit(255, 254, 1, false, false);
+        testSubTwoUnsigned8bit(126, 255, 127, true, false);
+        testSubTwoUnsigned8bit(255, 255, 0, false, false);
+        testSubTwoUnsigned8bit(255, 127, 128, false, false);
+        testSubTwoUnsigned8bit(254, 255, 255, true, false);
+        testSubTwoUnsigned8bit(254, 127, 127, false, true);
+        testSubTwoUnsigned8bit(127, 255, 128, true, true);
+    }
+
+    private void testSubTwoUnsigned8bit(int firstArgument, int secondArgument, int expectedResult, boolean expectedCarryFlag, boolean expectedOverflowFlag) {
+        XBitUtils.Arithmetic8bitResult arithmetic8bitResult = XBitUtils.subTwo8bits(
+                XBit8.valueOfUnsigned(firstArgument),
+                XBit8.valueOfUnsigned(secondArgument)
+        );
+        Assert.assertEquals(expectedResult, arithmetic8bitResult.result.getUnsignedValue());
+        Assert.assertEquals(expectedCarryFlag, arithmetic8bitResult.carry);
+        Assert.assertEquals(expectedOverflowFlag, arithmetic8bitResult.overflow);
     }
 
     public void testNot8bit() {

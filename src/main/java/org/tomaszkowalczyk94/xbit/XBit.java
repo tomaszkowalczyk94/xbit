@@ -1,6 +1,7 @@
 package org.tomaszkowalczyk94.xbit;
 
 
+@SuppressWarnings("WeakerAccess")
 public abstract class XBit<TSelf extends XBit> {
 
     /**
@@ -27,6 +28,14 @@ public abstract class XBit<TSelf extends XBit> {
         }
 
         return ((valueContainer >> index) & 1) == 1;
+    }
+
+    /**
+     * return most significant bit. It is sign bit for U2 notation.
+     * @return most significant bit. If it is 0, value is negative. Otherwise is positive or 0.
+     */
+    public boolean getSignBit() {
+        return getBit(getSize()-1);
     }
 
     /**
